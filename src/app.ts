@@ -3,6 +3,11 @@ import cors from "cors";
 import { gamesRouter } from "./modules/Game/router";
 import serverConfiguration from "./config/configServer";
 
+//Graphql:
+import { graphqlHTTP } from "express-graphql";
+import { listGames } from "./graphql/resolvers.graphql";
+import gamesSchema from "./graphql/schema.graphql";
+
 const app = express();
 const modeServer = serverConfiguration.server.mode;
 
@@ -38,5 +43,10 @@ app.use(express.json());
 
 //Router:
 app.use(gamesRouter);
+
+app.use(
+  "/api/v1/graphql",
+  graphqlHTTP({ schema: gamesSchema, rootValue: { listGames }, graphiql: true })
+);
 
 export default app;

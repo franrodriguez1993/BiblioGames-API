@@ -1,6 +1,7 @@
-import { buildSchema } from "graphql";
-
-const gamesSchema = buildSchema(`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const graphql_1 = require("graphql");
+const gamesSchema = (0, graphql_1.buildSchema)(`
   type Company {
     _id:ID!,
     name: String
@@ -47,4 +48,4 @@ type Query {
 
 
 `);
-export default gamesSchema;
+exports.default = gamesSchema;

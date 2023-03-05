@@ -7,6 +7,10 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const router_1 = require("./modules/Game/router");
 const configServer_1 = __importDefault(require("./config/configServer"));
+//Graphql:
+const express_graphql_1 = require("express-graphql");
+const resolvers_graphql_1 = require("./graphql/resolvers.graphql");
+const schema_graphql_1 = __importDefault(require("./graphql/schema.graphql"));
 const app = (0, express_1.default)();
 const modeServer = configServer_1.default.server.mode;
 //CORS:
@@ -29,11 +33,22 @@ const developmentOptions = {
 };
 const productionOptions = {
     // credentials: true,
-    origin: "http://localhost:3000",
+    origin: "*",
     methods: ["GET"],
 };
 app.use((0, cors_1.default)(modeServer === "development" ? developmentOptions : productionOptions));
 app.use(express_1.default.json());
 //Router:
 app.use(router_1.gamesRouter);
+app.use("/api/v1/graphql", (0, express_graphql_1.graphqlHTTP)({
+    schema: schema_graphql_1.default,
+    rootValue: {
+        listGames: resolvers_graphql_1.listGames,
+        listGamesByCompany: resolvers_graphql_1.listGamesByCompany,
+        listGamesByGender: resolvers_graphql_1.listGamesByGender,
+        listGamesByPlatform: resolvers_graphql_1.listGamesByPlatform,
+        listGamesByName: resolvers_graphql_1.listGamesByName,
+    },
+    graphiql: true,
+}));
 exports.default = app;

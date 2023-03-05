@@ -5,7 +5,13 @@ import serverConfiguration from "./config/configServer";
 
 //Graphql:
 import { graphqlHTTP } from "express-graphql";
-import { listGames } from "./graphql/resolvers.graphql";
+import {
+  listGames,
+  listGamesByCompany,
+  listGamesByGender,
+  listGamesByPlatform,
+  listGamesByName,
+} from "./graphql/resolvers.graphql";
 import gamesSchema from "./graphql/schema.graphql";
 
 const app = express();
@@ -46,7 +52,17 @@ app.use(gamesRouter);
 
 app.use(
   "/api/v1/graphql",
-  graphqlHTTP({ schema: gamesSchema, rootValue: { listGames }, graphiql: true })
+  graphqlHTTP({
+    schema: gamesSchema,
+    rootValue: {
+      listGames,
+      listGamesByCompany,
+      listGamesByGender,
+      listGamesByPlatform,
+      listGamesByName,
+    },
+    graphiql: true,
+  })
 );
 
 export default app;

@@ -160,3 +160,21 @@
 [2023-03-05T12:05:48.165] [INFO] default - Server up in http://localhost: - MODE: Production
 [2023-03-05T12:13:12.830] [INFO] default - Database connected successfully.
 [2023-03-05T12:13:12.847] [INFO] default - Server up in http://localhost: - MODE: Production
+[2023-03-05T17:11:43.424] [INFO] default - Database connected successfully.
+[2023-03-05T17:11:43.448] [INFO] default - Server up in http://localhost: - MODE: Production
+[2023-03-05T17:20:36.049] [INFO] default - Database connected successfully.
+[2023-03-05T17:20:36.068] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T10:49:31.099] [INFO] default - Database connected successfully.
+[2023-03-06T10:49:31.121] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T10:53:41.385] [INFO] default - Database connected successfully.
+[2023-03-06T10:53:41.403] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T12:15:58.919] [INFO] default - Database connected successfully.
+[2023-03-06T12:15:58.946] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T12:17:33.392] [INFO] default - Database connected successfully.
+[2023-03-06T12:17:33.411] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T12:20:40.418] [INFO] default - Database connected successfully.
+[2023-03-06T12:20:40.436] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T12:26:28.912] [INFO] default - Database connected successfully.
+[2023-03-06T12:26:28.934] [INFO] default - Server up in http://localhost:5000 - MODE: development
+[2023-03-06T12:28:37.503] [INFO] default - Database connected successfully.
+[2023-03-06T12:28:37.523] [INFO] default - Server up in http://localhost:5000 - MODE: development

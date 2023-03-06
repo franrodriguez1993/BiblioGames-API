@@ -5,6 +5,6 @@ const genderSchema = new mongoose_1.Schema({
     name: {
         type: String,
     },
-});
+}, { versionKey: false });
 const Genders = (0, mongoose_1.model)("genders", genderSchema);
 exports.default = Genders;

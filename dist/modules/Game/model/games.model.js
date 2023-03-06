@@ -30,7 +30,7 @@ const GamesSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-}, { timestamps: true });
+}, { timestamps: true, versionKey: false });
 //Solución 1 no sirvió de stackoverflow:
 // interface GamesModel<T extends Document> extends PaginateModel<T> {}
 // const Games: GamesModel<gamesInterface> = model(

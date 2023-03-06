@@ -33,7 +33,7 @@ const GamesSchema: Schema<gamesInterface> = new Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, versionKey: false }
 );
 
 //Solución 1 no sirvió de stackoverflow:

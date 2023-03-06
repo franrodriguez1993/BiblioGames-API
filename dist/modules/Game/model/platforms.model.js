@@ -5,6 +5,6 @@ const platformSchema = new mongoose_1.Schema({
     name: {
         type: String,
     },
-});
+}, { versionKey: false });
 const Platforms = (0, mongoose_1.model)("platforms", platformSchema);
 exports.default = Platforms;

@@ -6,6 +6,6 @@ const companySchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
-});
+}, { versionKey: false });
 const Companies = (0, mongoose_1.model)("companies", companySchema);
 exports.default = Companies;

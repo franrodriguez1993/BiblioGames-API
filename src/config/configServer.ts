@@ -1,11 +1,14 @@
 const serverConfiguration = {
   server: {
     port: process.env.PORT,
-    mode: process.env.MODE || "devolopment",
+    mode: process.env.MODE,
     urlApi: process.env.URL_API || "http://localhost:",
   },
   mongodb: {
-    host: process.env.MONGO_URI,
+    host:
+      process.env.MODE === "test"
+        ? process.env.MONGO_URI_TEST
+        : process.env.MONGO_URI,
     options: {
       useNewUrlParser: true,
       useUnifiedTopology: true,

@@ -3,7 +3,7 @@ import {
   gendersInterface,
 } from "../../../interfaces/Game/genders.interface";
 import daoGenders from "../dao/genders.dao";
-
+import { isValidObjectId } from "mongoose";
 const genderDAO = new daoGenders();
 
 export default class genderService {
@@ -33,6 +33,10 @@ export default class genderService {
   /**  =========== EDIT GENDER =========== **/
 
   async editGender(id: string, data: genderBodyInterface) {
+    //validate id:
+    if (!isValidObjectId(id)) {
+      return "INVALID_ID";
+    }
     //check if exists:
     const checkGender = await genderDAO.getOneByID(id);
     if (!checkGender) {
@@ -55,6 +59,11 @@ export default class genderService {
 
   /**  =========== DELETE GENDER =========== **/
   async deleteGender(id: string) {
+    //validate id:
+    if (!isValidObjectId(id)) {
+      return "INVALID_ID";
+    }
+
     //check:
     const checkGender = await genderDAO.getOneByID(id);
     if (!checkGender) {

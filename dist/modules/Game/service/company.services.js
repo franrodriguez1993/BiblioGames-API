@@ -12,6 +12,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+//Interfaces:
+const mongoose_1 = require("mongoose");
 //Dao:
 const companies_dao_1 = __importDefault(require("../dao/companies.dao"));
 const dao = new companies_dao_1.default();
@@ -43,6 +45,9 @@ class companyService {
     /** EDIT COMPANIES  **/
     editCompany(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id))
+                return "INVALID_ID";
             //check if exists:
             const checkCompany = yield dao.getOneByID(id);
             if (!checkCompany) {
@@ -66,6 +71,9 @@ class companyService {
     /** DELETE COMPANIES  **/
     deleteCompany(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id))
+                return "INVALID_ID";
             //check:
             const check = yield dao.getOneByID(id);
             if (!check) {

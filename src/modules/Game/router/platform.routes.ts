@@ -15,7 +15,12 @@ router.post(
   controller.createPlatform
 );
 router.get("/list", controller.listPlatforms);
-router.put("/edit/:id", corsCheckMiddleware, controller.editPlatform);
+router.put(
+  "/edit/:id",
+  corsCheckMiddleware,
+  validateBodyFeature,
+  controller.editPlatform
+);
 router.delete("/delete/:id", corsCheckMiddleware, controller.deletePlatform);
 
 export { router };

@@ -16,5 +16,5 @@ const router = (0, express_1.Router)();
 exports.router = router;
 router.post("/create", corsCheck_1.default, BodyValidator_1.validateBodyFeature, controller.createPlatform);
 router.get("/list", controller.listPlatforms);
-router.put("/edit/:id", corsCheck_1.default, controller.editPlatform);
+router.put("/edit/:id", corsCheck_1.default, BodyValidator_1.validateBodyFeature, controller.editPlatform);
 router.delete("/delete/:id", corsCheck_1.default, controller.deletePlatform);

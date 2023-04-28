@@ -1,3 +1,4 @@
+import { isValidObjectId } from "mongoose";
 import {
   platformBodyInterface,
   platformsInterface,
@@ -32,6 +33,8 @@ export default class platformService {
   /**  =========== EDIT PLATFORM =========== **/
 
   async editPlatform(id: string, data: platformBodyInterface) {
+    //validate id:
+    if (!isValidObjectId(id)) return "INVALID_ID";
     //check if exists:
     const checkPlatform = await platformDAO.getOneByID(id);
     if (!checkPlatform) {
@@ -54,6 +57,9 @@ export default class platformService {
 
   /**  =========== DELETE PLATFORM =========== **/
   async deletePlatform(id: string) {
+    //validate id:
+    if (!isValidObjectId(id)) return "INVALID_ID";
+
     //check:
     const checkPlatform = await platformDAO.getOneByID(id);
     if (!checkPlatform) {

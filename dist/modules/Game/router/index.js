@@ -36,7 +36,7 @@ const cleanFileName = (fileName) => {
 (0, fs_1.readdirSync)(PATH_ROUTER).filter((fileName) => {
     const cleanName = cleanFileName(fileName);
     if (cleanName !== "index") {
-        Promise.resolve().then(() => __importStar(require(`./${fileName}`))).then((moduleRouter) => {
+        Promise.resolve(`${`./${fileName}`}`).then(s => __importStar(require(s))).then((moduleRouter) => {
             gamesRouter.use(`/api/v1/${cleanName}`, moduleRouter.router);
         });
     }

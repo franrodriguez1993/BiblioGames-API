@@ -13,6 +13,7 @@ import daoPlatforms from "../dao/platforms.dao";
 import daoGenders from "../dao/genders.dao";
 //Image uploader:
 import imageKitClass from "../../../helpers/imageKitClass";
+import { ObjectId, isValidObjectId } from "mongoose";
 
 const gamesDao = new daoGames();
 const companyDao = new daoCompanies();
@@ -23,11 +24,48 @@ const uploaderManager = new imageKitClass();
 export default class gameService {
   /**  CREATE GAME  **/
   async createGame(data: gamesBodyInterface) {
+    //Validate game id:
+    if (data._id) {
+      if (!isValidObjectId(data._id.toString())) return "INVALID_ID";
+    }
+    //validate gender id:
+    if (data.gender.map((g) => isValidObjectId(g)).some((x) => x === false)) {
+      return "INVALID_ID";
+    }
+    // validate platforms id:
+    if (data.platform.map((p) => isValidObjectId(p)).some((x) => x === false)) {
+      return "INVALID_ID";
+    }
+    // validate company id:
+    if (!isValidObjectId(data.company)) return "INVALID_ID";
+
     //check name:
     const checkName = await gamesDao.getOneByName(data.name);
     if (checkName) {
       return "NAME_ALREADY_IN_USE";
     }
+
+    //check platforms:
+    const platformsArray = await Promise.all(
+      data.platform.map(async (p) => {
+        const check = await platformDao.getOneByID(p);
+        return check ? true : false;
+      })
+    );
+    if (platformsArray.some((p) => p === false)) return "PLATFORM_NOT_FOUND";
+
+    //check gender:
+    const genderArray = await Promise.all(
+      data.gender.map(async (g) => {
+        const check = await genderDao.getOneByID(g);
+        return check ? true : false;
+      })
+    );
+    if (genderArray.some((g) => g === false)) return "GENDER_NOT_FOUND";
+
+    //check company:
+    const company = await companyDao.getOneByID(data.company as string);
+    if (!company) return "COMPANY_NOT_FOUND";
 
     //Create:
     const newGame: gamesInterface = await gamesDao.createGame(data);
@@ -72,6 +110,42 @@ export default class gameService {
 
   /**  EDIT GAME **/
   async editGame(id: string, data: gamesBodyInterface) {
+    //Validate game id:
+    if (!isValidObjectId(id.toString())) return "INVALID_ID";
+
+    //validate gender id:
+    if (data.gender.map((g) => isValidObjectId(g)).some((x) => x === false)) {
+      return "INVALID_ID";
+    }
+    // validate platforms id:
+    if (data.platform.map((p) => isValidObjectId(p)).some((x) => x === false)) {
+      return "INVALID_ID";
+    }
+    // validate company id:
+    if (!isValidObjectId(data.company)) return "INVALID_ID";
+
+    //check platforms:
+    const platformsArray = await Promise.all(
+      data.platform.map(async (p) => {
+        const check = await platformDao.getOneByID(p);
+        return check ? true : false;
+      })
+    );
+    if (platformsArray.some((p) => p === false)) return "PLATFORM_NOT_FOUND";
+
+    //check gender:
+    const genderArray = await Promise.all(
+      data.gender.map(async (g) => {
+        const check = await genderDao.getOneByID(g);
+        return check ? true : false;
+      })
+    );
+    if (genderArray.some((g) => g === false)) return "GENDER_NOT_FOUND";
+
+    //check company:
+    const company = await companyDao.getOneByID(data.company as string);
+    if (!company) return "COMPANY_NOT_FOUND";
+
     //check game:
     const checkGame = await gamesDao.getOneByID(id);
     if (!checkGame) return "GAME_NOT_FOUND";
@@ -87,6 +161,8 @@ export default class gameService {
 
   /**  DELETE GAME **/
   async deleteGame(id: string) {
+    //Validate game id:
+    if (!isValidObjectId(id.toString())) return "INVALID_ID";
     //check game:
     const check = await gamesDao.getOneByID(id);
     if (!check) return "GAME_NOT_FOUND";

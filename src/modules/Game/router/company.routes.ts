@@ -15,7 +15,12 @@ router.post(
   controller.createCompany
 );
 router.get("/list", controller.listCompanies);
-router.put("/edit/:id", corsCheckMiddleware, controller.editCompany);
+router.put(
+  "/edit/:id",
+  corsCheckMiddleware,
+  validateBodyFeature,
+  controller.editCompany
+);
 router.delete("/delete/:id", corsCheckMiddleware, controller.deleteCompany);
 
 export { router };

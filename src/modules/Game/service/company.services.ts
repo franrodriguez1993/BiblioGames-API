@@ -1,4 +1,5 @@
 //Interfaces:
+import { isValidObjectId } from "mongoose";
 import {
   companyBodyInterface,
   companiesInterface,
@@ -33,6 +34,9 @@ export default class companyService {
 
   /** EDIT COMPANIES  **/
   async editCompany(id: string, data: companyBodyInterface) {
+    //validate id:
+    if (!isValidObjectId(id)) return "INVALID_ID";
+
     //check if exists:
     const checkCompany = await dao.getOneByID(id);
     if (!checkCompany) {
@@ -55,6 +59,9 @@ export default class companyService {
 
   /** DELETE COMPANIES  **/
   async deleteCompany(id: string) {
+    //validate id:
+    if (!isValidObjectId(id)) return "INVALID_ID";
+
     //check:
     const check = await dao.getOneByID(id);
     if (!check) {

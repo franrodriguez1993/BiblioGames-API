@@ -23,7 +23,7 @@ class daoCompanies extends mongoContainer_1.default {
     create(data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                return yield this.model.create(data);
+                return yield this.model.create(Object.assign({}, data));
             }
             catch (e) {
                 logger_1.logger.error(e.message);

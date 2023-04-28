@@ -42,7 +42,11 @@ const productionOptions = {
 };
 
 app.use(
-  cors(modeServer === "development" ? developmentOptions : productionOptions)
+  cors(
+    modeServer === "development" || modeServer === "test"
+      ? developmentOptions
+      : productionOptions
+  )
 );
 
 app.use(express.json());

@@ -36,7 +36,9 @@ const productionOptions = {
     origin: "*",
     methods: ["GET"],
 };
-app.use((0, cors_1.default)(modeServer === "development" ? developmentOptions : productionOptions));
+app.use((0, cors_1.default)(modeServer === "development" || modeServer === "test"
+    ? developmentOptions
+    : productionOptions));
 app.use(express_1.default.json());
 //Router:
 app.use(router_1.gamesRouter);

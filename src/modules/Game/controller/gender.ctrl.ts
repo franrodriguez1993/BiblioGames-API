@@ -59,7 +59,10 @@ export default class genderController {
       //Return:
       if (resService === "GENDER_NOT_FOUND") {
         return res.status(404).json({ status: 404, msg: resService });
-      } else if (resService === "NAME_ALREADY_IN_USE") {
+      } else if (
+        resService === "NAME_ALREADY_IN_USE" ||
+        resService === "INVALID_ID"
+      ) {
         return res.status(400).json({ status: 400, msg: resService });
       } else if (resService === "ERROR_EDIT") {
         return res.status(500).json({ status: 500, msg: resService });
@@ -86,6 +89,8 @@ export default class genderController {
       //Response:
       if (resService === "GENDER_NOT_FOUND") {
         return res.status(404).json({ status: 404, msg: resService });
+      } else if (resService === "INVALID_ID") {
+        return res.status(400).json({ status: 400, msg: resService });
       } else {
         return res.status(200).json({ status: 200, msg: "GENDER_DELETED" });
       }

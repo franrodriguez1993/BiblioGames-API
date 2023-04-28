@@ -15,7 +15,12 @@ router.post(
   controller.createGender
 );
 router.get("/list", controller.listGenders);
-router.put("/edit/:id", corsCheckMiddleware, controller.editGender);
+router.put(
+  "/edit/:id",
+  corsCheckMiddleware,
+  validateBodyFeature,
+  controller.editGender
+);
 router.delete("/delete/:id", corsCheckMiddleware, controller.deleteGender);
 
 export { router };

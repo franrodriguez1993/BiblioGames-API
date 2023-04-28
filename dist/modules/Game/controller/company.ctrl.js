@@ -71,7 +71,8 @@ class companyController {
                 if (resService === "COMPANY_NOT_FOUND") {
                     return res.status(404).json({ status: 404, msg: resService });
                 }
-                else if (resService === "NAME_ALREADY_IN_USE") {
+                else if (resService === "NAME_ALREADY_IN_USE" ||
+                    resService === "INVALID_ID") {
                     return res.status(400).json({ status: 400, msg: resService });
                 }
                 else if (resService === "ERROR_EDIT") {
@@ -99,6 +100,9 @@ class companyController {
                 const resService = yield service.deleteCompany(id);
                 if (resService === "COMPANY_NOT_FOUND") {
                     return res.status(404).json({ status: 404, msg: resService });
+                }
+                else if (resService === "INVALID_ID") {
+                    return res.status(400).json({ status: 400, msg: resService });
                 }
                 else {
                     return res.status(200).json({ status: 200, msg: "COMPANY_DELETED" });

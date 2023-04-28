@@ -50,10 +50,23 @@ class mongoContainer {
             }
         });
     }
+    /**  DELETE BY ID  **/
     delete(id) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 return yield this.model.findOneAndDelete({ _id: id });
+            }
+            catch (e) {
+                logger_1.logger.info(e.message);
+                throw new Error(e);
+            }
+        });
+    }
+    /**  DELETE ALL  **/
+    deleteAll() {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                return yield this.model.deleteMany({});
             }
             catch (e) {
                 logger_1.logger.info(e.message);

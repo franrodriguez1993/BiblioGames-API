@@ -8,17 +8,13 @@ const PORT = serverConfiguration.server.port;
 const MODE = serverConfiguration.server.mode;
 const URL_API = serverConfiguration.server.urlApi;
 
-async function main() {
-  await new MongoDBClient().connect();
-  if (MODE === "development") {
-    app.listen(PORT, () => {
-      logger.info(`Server up in ${URL_API}${PORT} - MODE: development`);
-    });
-  } else {
-    app.listen(PORT, () => {
-      logger.info(`Server up in ${URL_API} - MODE: Production`);
-    });
-  }
-}
+const database = new MongoDBClient();
 
-main();
+const server = app.listen(PORT, async () => {
+  await database.connect();
+  MODE === "development" || MODE === "test"
+    ? logger.info(`Server up in ${URL_API}${PORT} - MODE: development`)
+    : logger.info(`Server up in ${URL_API} - MODE: Production`);
+});
+
+export { app, server, database };

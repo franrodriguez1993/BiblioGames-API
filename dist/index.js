@@ -12,27 +12,22 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.database = exports.server = exports.app = void 0;
 require("dotenv/config");
 const MongoDBClass_1 = __importDefault(require("./config/MongoDBClass"));
 const configServer_1 = __importDefault(require("./config/configServer"));
 const logger_1 = require("./helpers/logger");
 const app_1 = __importDefault(require("./app"));
+exports.app = app_1.default;
 const PORT = configServer_1.default.server.port;
 const MODE = configServer_1.default.server.mode;
 const URL_API = configServer_1.default.server.urlApi;
-function main() {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield new MongoDBClass_1.default().connect();
-        if (MODE === "development") {
-            app_1.default.listen(PORT, () => {
-                logger_1.logger.info(`Server up in ${URL_API}${PORT} - MODE: development`);
-            });
-        }
-        else {
-            app_1.default.listen(PORT, () => {
-                logger_1.logger.info(`Server up in ${URL_API} - MODE: Production`);
-            });
-        }
-    });
-}
-main();
+const database = new MongoDBClass_1.default();
+exports.database = database;
+const server = app_1.default.listen(PORT, () => __awaiter(void 0, void 0, void 0, function* () {
+    yield database.connect();
+    MODE === "development" || MODE === "test"
+        ? logger_1.logger.info(`Server up in ${URL_API}${PORT} - MODE: development`)
+        : logger_1.logger.info(`Server up in ${URL_API} - MODE: Production`);
+}));
+exports.server = server;

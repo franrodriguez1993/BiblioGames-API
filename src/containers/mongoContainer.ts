@@ -36,10 +36,19 @@ export default class mongoContainer {
       throw new Error(e);
     }
   }
-
+  /**  DELETE BY ID  **/
   async delete(id: string) {
     try {
       return await this.model.findOneAndDelete({ _id: id });
+    } catch (e: any) {
+      logger.info(e.message);
+      throw new Error(e);
+    }
+  }
+  /**  DELETE ALL  **/
+  async deleteAll() {
+    try {
+      return await this.model.deleteMany({});
     } catch (e: any) {
       logger.info(e.message);
       throw new Error(e);

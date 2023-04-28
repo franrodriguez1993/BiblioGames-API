@@ -16,5 +16,5 @@ const router = (0, express_1.Router)();
 exports.router = router;
 router.post("/create", corsCheck_1.default, BodyValidator_1.validateBodyFeature, controller.createGender);
 router.get("/list", controller.listGenders);
-router.put("/edit/:id", corsCheck_1.default, controller.editGender);
+router.put("/edit/:id", corsCheck_1.default, BodyValidator_1.validateBodyFeature, controller.editGender);
 router.delete("/delete/:id", corsCheck_1.default, controller.deleteGender);

@@ -13,6 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const genders_dao_1 = __importDefault(require("../dao/genders.dao"));
+const mongoose_1 = require("mongoose");
 const genderDAO = new genders_dao_1.default();
 class genderService {
     /** =========== CREATE GENDER ===========**/
@@ -42,6 +43,10 @@ class genderService {
     /**  =========== EDIT GENDER =========== **/
     editGender(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id)) {
+                return "INVALID_ID";
+            }
             //check if exists:
             const checkGender = yield genderDAO.getOneByID(id);
             if (!checkGender) {
@@ -65,6 +70,10 @@ class genderService {
     /**  =========== DELETE GENDER =========== **/
     deleteGender(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id)) {
+                return "INVALID_ID";
+            }
             //check:
             const checkGender = yield genderDAO.getOneByID(id);
             if (!checkGender) {

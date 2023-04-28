@@ -12,6 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = require("mongoose");
 const platforms_dao_1 = __importDefault(require("../dao/platforms.dao"));
 const platformDAO = new platforms_dao_1.default();
 class platformService {
@@ -42,6 +43,9 @@ class platformService {
     /**  =========== EDIT PLATFORM =========== **/
     editPlatform(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id))
+                return "INVALID_ID";
             //check if exists:
             const checkPlatform = yield platformDAO.getOneByID(id);
             if (!checkPlatform) {
@@ -65,6 +69,9 @@ class platformService {
     /**  =========== DELETE PLATFORM =========== **/
     deletePlatform(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            //validate id:
+            if (!(0, mongoose_1.isValidObjectId)(id))
+                return "INVALID_ID";
             //check:
             const checkPlatform = yield platformDAO.getOneByID(id);
             if (!checkPlatform) {

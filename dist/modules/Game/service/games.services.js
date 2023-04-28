@@ -19,6 +19,7 @@ const platforms_dao_1 = __importDefault(require("../dao/platforms.dao"));
 const genders_dao_1 = __importDefault(require("../dao/genders.dao"));
 //Image uploader:
 const imageKitClass_1 = __importDefault(require("../../../helpers/imageKitClass"));
+const mongoose_1 = require("mongoose");
 const gamesDao = new games_dao_1.default();
 const companyDao = new companies_dao_1.default();
 const platformDao = new platforms_dao_1.default();
@@ -28,11 +29,45 @@ class gameService {
     /**  CREATE GAME  **/
     createGame(data) {
         return __awaiter(this, void 0, void 0, function* () {
+            //Validate game id:
+            if (data._id) {
+                if (!(0, mongoose_1.isValidObjectId)(data._id.toString()))
+                    return "INVALID_ID";
+            }
+            //validate gender id:
+            if (data.gender.map((g) => (0, mongoose_1.isValidObjectId)(g)).some((x) => x === false)) {
+                return "INVALID_ID";
+            }
+            // validate platforms id:
+            if (data.platform.map((p) => (0, mongoose_1.isValidObjectId)(p)).some((x) => x === false)) {
+                return "INVALID_ID";
+            }
+            // validate company id:
+            if (!(0, mongoose_1.isValidObjectId)(data.company))
+                return "INVALID_ID";
             //check name:
             const checkName = yield gamesDao.getOneByName(data.name);
             if (checkName) {
                 return "NAME_ALREADY_IN_USE";
             }
+            //check platforms:
+            const platformsArray = yield Promise.all(data.platform.map((p) => __awaiter(this, void 0, void 0, function* () {
+                const check = yield platformDao.getOneByID(p);
+                return check ? true : false;
+            })));
+            if (platformsArray.some((p) => p === false))
+                return "PLATFORM_NOT_FOUND";
+            //check gender:
+            const genderArray = yield Promise.all(data.gender.map((g) => __awaiter(this, void 0, void 0, function* () {
+                const check = yield genderDao.getOneByID(g);
+                return check ? true : false;
+            })));
+            if (genderArray.some((g) => g === false))
+                return "GENDER_NOT_FOUND";
+            //check company:
+            const company = yield companyDao.getOneByID(data.company);
+            if (!company)
+                return "COMPANY_NOT_FOUND";
             //Create:
             const newGame = yield gamesDao.createGame(data);
             if (!newGame) {
@@ -75,6 +110,38 @@ class gameService {
     /**  EDIT GAME **/
     editGame(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
+            //Validate game id:
+            if (!(0, mongoose_1.isValidObjectId)(id.toString()))
+                return "INVALID_ID";
+            //validate gender id:
+            if (data.gender.map((g) => (0, mongoose_1.isValidObjectId)(g)).some((x) => x === false)) {
+                return "INVALID_ID";
+            }
+            // validate platforms id:
+            if (data.platform.map((p) => (0, mongoose_1.isValidObjectId)(p)).some((x) => x === false)) {
+                return "INVALID_ID";
+            }
+            // validate company id:
+            if (!(0, mongoose_1.isValidObjectId)(data.company))
+                return "INVALID_ID";
+            //check platforms:
+            const platformsArray = yield Promise.all(data.platform.map((p) => __awaiter(this, void 0, void 0, function* () {
+                const check = yield platformDao.getOneByID(p);
+                return check ? true : false;
+            })));
+            if (platformsArray.some((p) => p === false))
+                return "PLATFORM_NOT_FOUND";
+            //check gender:
+            const genderArray = yield Promise.all(data.gender.map((g) => __awaiter(this, void 0, void 0, function* () {
+                const check = yield genderDao.getOneByID(g);
+                return check ? true : false;
+            })));
+            if (genderArray.some((g) => g === false))
+                return "GENDER_NOT_FOUND";
+            //check company:
+            const company = yield companyDao.getOneByID(data.company);
+            if (!company)
+                return "COMPANY_NOT_FOUND";
             //check game:
             const checkGame = yield gamesDao.getOneByID(id);
             if (!checkGame)
@@ -92,6 +159,9 @@ class gameService {
     /**  DELETE GAME **/
     deleteGame(id) {
         return __awaiter(this, void 0, void 0, function* () {
+            //Validate game id:
+            if (!(0, mongoose_1.isValidObjectId)(id.toString()))
+                return "INVALID_ID";
             //check game:
             const check = yield gamesDao.getOneByID(id);
             if (!check)

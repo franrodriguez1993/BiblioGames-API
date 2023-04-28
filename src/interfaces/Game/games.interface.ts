@@ -6,6 +6,7 @@ import { gendersInterface } from "./genders.interface";
 import { platformsInterface } from "./platforms.interface";
 
 export interface gamesBodyInterface {
+  _id?: string | ObjectId;
   name: string;
   image?: string;
   release: string;
@@ -16,6 +17,6 @@ export interface gamesBodyInterface {
 }
 
 export interface gamesInterface extends gamesBodyInterface, Document {
-  _id?: string | ObjectId;
+  _id: string | ObjectId;
   createdAt: string;
 }
